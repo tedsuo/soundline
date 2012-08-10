@@ -25,3 +25,7 @@ app.get('/templates',function(req,res){
     res.send(templates);
   });
 });
+
+app.get('/oauth',function(req,res){
+  res.send('<script src="//connect.soundcloud.com/sdk.js"></script>');
+});
