@@ -3,7 +3,7 @@ var express = require('express');
 var stitchit = require('stitchit');
 
 // Constants
-var PORT = process.env.PORT || 5000;
+var PORT = process.env.PORT || 80;
 var PUBLIC_DIR = __dirname + '/client';
 var TEMPLATE_PATH = PUBLIC_DIR + '/templates/';
 var TEMPLATE_NAMESPACE = 'SL.template';
