@@ -6,7 +6,7 @@ var stitchit = require('stitchit');
 var PORT = process.env.PORT || 80;
 var PUBLIC_DIR = __dirname + '/client';
 var TEMPLATE_PATH = PUBLIC_DIR + '/templates/';
-var TEMPLATE_NAMESPACE = 'SL.template';
+var TEMPLATE_NAMESPACE = 'SL.t';
 
 // SoundLine http server
 app = express();
