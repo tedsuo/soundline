@@ -1,19 +1,24 @@
 SL.boot = function(){
-  // initialize client with app credentials
+  // initialize soundcloud client with app credentials
   SC.initialize({
     client_id: SL.CLIENT_ID,
     redirect_uri: SL.OAUTH_URL 
   });
-
+ 
+  // create models
+  SL.current_user = new SL.User();
+  
+  // create views
+  SL.splash_view = new SL.SplashView({
+    el: document.getElementById('sl-container')
+  })
+ 
+  // start the app, or show the login screen
   $(function(){
-    if(SL.initializeAccessToken()){
-      SC.get('/me', function(me) { 
-        console.log(me);
-      });
+    if(SL.current_user.isLoggedIn()){
+      SL.current_user.initializeFromSoundClound();
     }else{
-      SL.v.splash = new SL.SplashView({
-        el: document.getElementById('sl-container')
-      }).render();
+      SL.splash_view.render();
     }
   });
 };
