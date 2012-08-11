@@ -56,3 +56,24 @@ app.get('/templates',function(req,res){
 app.get('/oauth',function(req,res){
   res.send('<script src="//connect.soundcloud.com/sdk.js"></script>');
 });
+
+// create/update a user's metadata
+app.put('/users/:id',function(req,res){
+  bufferRequest(req,function(err,data){
+    if(err) return res.send(500,err.toString());
+    db.set('user:'+req.params.id, data, function(err){
+      if(err) return res.send(500,err.toString());
+      res.end('',200); 
+    });
+  });
+});
+
+app.get('/users/:id',function(req,res){
+  db.get('user:'+req.params.id,function(err,reply){
+    if(err) return res.send(500,err.toString());
+    if(reply === null) return res.send(404);
+    res.set('Content-Type','application/json');
+    res.set('Content-Length',reply.length);
+    res.send(reply);
+  });
+});
