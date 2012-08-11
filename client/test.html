@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SoundLine Tests</title>
+
+  <script src="//connect.soundcloud.com/sdk.js"></script>
+  <script src="/lib/jquery.js"></script>
+  <script src="/lib/bootstrap.js"></script>
+  <script src="/lib/underscore.js"></script>
+  <script src="/lib/backbone.js"></script>
+  <script src="/config.js"></script>
+  <script src="/templates"></script>
+  <script src="/helpers/get_access_token.js"></script>
+  <script src="/helpers/set_access_token.js"></script>
+  <script src="/helpers/initialize_access_token.js"></script>
+  <script src="/views/splash.js"></script>
+  <script src="/boot.js"></script>
+  
+  <!--Test Harness-->
+  <link id="mocha-styles" rel="stylesheet" type="text/css" href="/test/mocha.css" />
+  <script src="/test/mocha.js"></script>
+  <script src="/test/chai.js"></script>
+  <script>
+    mocha.setup({
+      ui:'bdd',
+      ignoreLeaks: true
+    });
+    var should = chai.Should();
+    var expect = chai.expect;
+    $(function(){
+      mocha.run();
+    });
+  </script>
+  <script src="/test/user.js"></script>
+</head>
+<body>
+  <div id="mocha"></div>
+  <div id="sl-container"></div>
+</body>
+</html>
