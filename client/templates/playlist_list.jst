@@ -1,0 +1,11 @@
+<div id="playlist-list" class="well sidebar-nav">
+  <ul class="nav nav-list">
+    <li class="nav-header">Playlists</li>
+    <% playlists.forEach(function(list){ %>
+      <li <% if(list.cid === selected_playlist_cid){ %> class="active"<% } %>>
+        <a href="#"><%= list.get('name') %></a>
+      </li>
+    <% }) %>
+  </ul>
+</div>
+
