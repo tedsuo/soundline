@@ -1,11 +1,13 @@
 SL.PlaylistListView = Backbone.View.extend({
   
   events:{
+    'click #new-playlist-btn': 'newPlayList'
   },
   
   initialize: function(o){
     this.playlists = o.playlists;
     this.selected_playlist_cid = 0;
+    this.playlists.on('add',this.render,this);
   },
 
   render: function(){
@@ -21,6 +23,10 @@ SL.PlaylistListView = Backbone.View.extend({
   },
 
   newPlayList: function(){
-  
+    var form = new SL.NewPlaylistView({
+      playlist: new SL.Playlist()
+    });
+    $('body').append(form.el);
+    form.render();
   }
 });
