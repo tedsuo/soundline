@@ -2,10 +2,20 @@
   <ul class="nav nav-list">
     <li class="nav-header">Playlists</li>
     <% playlists.forEach(function(list){ %>
-      <li <% if(list.cid === selected_playlist_cid){ %> class="active"<% } %>>
-        <a href="#"><%= list.get('name') %></a>
+      <li class="<% if(list.cid === selected_playlist_cid){ %> active<% } %>">
+        <a href="#">
+          <label class="pull-left"><%= list.get('name') %></label>
+          <i class="icon-remove-sign pull-right"></i>
+          <div class="clear"></div>
+        </a>
       </li>
     <% }) %>
+    <li>
+      <button id="new-playlist-btn"><i class="icon-plus"></i>Add Playlist</button>
+    </li>
+    <li>
+      *double tap to edit
+    </li>
   </ul>
 </div>
 
