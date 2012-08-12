@@ -1,6 +1,6 @@
-SL.Playlist = Backbone.Collection.extend({
+SL.Playlist = Backbone.Model.extend({
   urlRoot: function(){
-    return '/playlists/'+this.id;
+    return SL.current_user.id+'/playlists';
   },
 
   initialize: function(){
