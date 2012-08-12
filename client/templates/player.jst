@@ -1,0 +1,63 @@
+<div class="navbar navbar-fixed-top">
+  <div id="" class="navbar-inner">
+    <div id="player-bar" class="container-fluid">
+      <span class="brand player-text">SoundLine</span>
+      <div class="pull-right player-text">
+        <a href="<%= SL.current_user.get('permalink_url') %>" target="_blank">
+          <% if(SL.current_user.has('avatar_url')){ %>
+            <img class="user-icon" src="<%= SL.current_user.get('avatar_url') %>" />
+          <% } %>
+          <%= SL.current_user.get('username') %>
+        </a>
+        &nbsp;&nbsp;
+        <a href="/"> logout </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="player-container" class="container-fluid">
+  <div class="row-fluid">
+    <div id="sidebar" class="span3">
+    </div><!--/span-->
+    <div id="main" class="span9 well">
+     <table id="track-list" class="table">
+<thead>
+<tr>
+<th>#</th>
+<th>Track</th>
+<th>Artist</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Mark</td>
+<td>Otto</td>
+<td>@mdo</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Jacob</td>
+<td>Thornton</td>
+<td>@fat</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Larry</td>
+<td>the Bird</td>
+<td>@twitter</td>
+</tr>
+</tbody>
+</table> 
+    </div><!--/span-->
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    <p>&copy; Company 2012</p>
+  </footer>
+
+</div><!--/.fluid-container--
