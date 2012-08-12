@@ -27,6 +27,7 @@ SL.User = Backbone.Model.extend({
   initializeFromServer: function(sc_user){
     var user = this;
     var desired_fields = ['id','username','avatar_url'];
+    var desired_fields = ['id','username','avatar_url','permalink_url'];
     var user_data = _.pick(sc_user,desired_fields);
     user.save(user_data,{
       success: function(){
