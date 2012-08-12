@@ -2,6 +2,9 @@ body {
 background: url("/img/noise.png") #F76700;
 }
 
+#splash{
+margin-top:5%;
+}
 .hero-banner h1{
 color:#ffffff;
 font-size: 60px;
@@ -30,7 +33,7 @@ margin-top:2em;
 text-align: right;
 }
 #login-btn{
-margin:auto;
+letter-spacing: 1px;
 }
 
 /* it's only stealing if you don't hire me */
@@ -41,4 +44,15 @@ a.big-action-button { cursor: pointer; }
 a.big-action-button.orange { border: 1px solid #c53421; }
 a.big-action-button.orange:hover { border-color: #832316; }
 
-
+#player-container{
+margin-top:80px;
+}
+#player-bar{
+height: 60px;
+}
+.user-icon{
+height:40px;
+}
+.player-text{
+margin-top:10px;
+}
