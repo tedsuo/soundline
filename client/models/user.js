@@ -1,20 +1,27 @@
 SL.User = Backbone.Model.extend({
   urlRoot: '/users',
+  
+  initialize: function(){
+    // see if we have an access token
+    this.logged_in = SL.initializeAccessToken();
+  },
 
   authenticate: function(){
     var user = this;
     SC.connect(function() {
       SL.setAccessToken(SC.storage().getItem('SC.accessToken'));
+      user.logged_in = true;
       user.initializeFromSoundClound();
     });
   },
  
   isLoggedIn: function(){
-    return SL.initializeAccessToken();
+    return this.logged_in;
   },
 
   logout: function(){
     SL.setAccessToken(null);
+    user.logged_in = false;
   },
 
   initializeFromSoundClound: function(){
@@ -26,7 +33,6 @@ SL.User = Backbone.Model.extend({
   
   initializeFromServer: function(sc_user){
     var user = this;
-    var desired_fields = ['id','username','avatar_url'];
     var desired_fields = ['id','username','avatar_url','permalink_url'];
     var user_data = _.pick(sc_user,desired_fields);
     user.save(user_data,{
