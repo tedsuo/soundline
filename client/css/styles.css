@@ -1,7 +1,9 @@
 body {
 background: url("/img/noise.png") #F76700;
 }
-
+.clear{
+clear:both;
+}
 #splash{
 margin-top:5%;
 }
