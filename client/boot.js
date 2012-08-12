@@ -4,21 +4,32 @@ SL.boot = function(){
     client_id: SL.CLIENT_ID,
     redirect_uri: SL.OAUTH_URL 
   });
- 
-  // create models
+
+  // store the element we hang our top-level views off of
+  SL.root_element = document.getElementById('sl-container');
+
+  // current_user is a singleton which is assumed to exist 
+  // and is referenced directly by the rest of the codebase
   SL.current_user = new SL.User();
-  
-  // create views
-  SL.splash_view = new SL.SplashView({
-    el: document.getElementById('sl-container')
-  })
- 
-  // start the app, or show the login screen
+
+  // once the user is setup, show the media player 
+  SL.current_user.on('initialized', function(o){
+    SL.player = new SL.Player(o);
+
+    SL.player_view = new SL.PlayerView({
+      el: SL.root_element,
+      model: SL.player
+    }).render();
+  });
+
+  // on load, start the app, or show the login screen
   $(function(){
     if(SL.current_user.isLoggedIn()){
       SL.current_user.initializeFromSoundClound();
     }else{
-      SL.splash_view.render();
+      SL.splash_view = new SL.SplashView({
+        el: SL.root_element 
+      }).render();
     }
   });
 };
