@@ -8,6 +8,10 @@ SL.Player = Backbone.Model.extend({
     return this.playlists;
   },
   
+  getActivePlaylist: function(){
+    return this.playlists.getActive();
+  },
+
   fetch: function(){
     this.playlists.fetch();
   }
