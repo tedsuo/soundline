@@ -3,9 +3,9 @@
     <li class="nav-header">Playlists</li>
     <% playlists.forEach(function(list){ %>
       <li class="<% if(list.cid === selected_playlist_cid){ %> active<% } %>">
-        <a href="#">
+        <a href="#" class="js-playlist-btn" data-cid="<%= list.cid %>" rel="tooltip" title="<%= list.get('description') %>">
           <label class="pull-left"><%= list.get('name') %></label>
-          <i class="icon-remove-sign pull-right"></i>
+          <i class="icon-minus-sign pull-right js-delete" data-cid="<%= list.cid %>"></i>
           <div class="clear"></div>
         </a>
       </li>
