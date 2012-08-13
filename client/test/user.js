@@ -1,7 +1,7 @@
 describe('User',function(){
   describe('initializeFromServer',function(done){
     it('should save the userdata', function(done){
-      var user_id = _.uniqueId();
+      var user_id = _.uniqueId()+1;
       var user_name = 'test_'+user_id;
       var user = new SL.User();
       user.on('initialized',function(){
