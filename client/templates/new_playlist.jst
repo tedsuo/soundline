@@ -1,18 +1,19 @@
-<div class="modal" id="myModal">
+<div class="modal" id="new-playlist-popup">
   <div class="modal-header">
     <button type="button" class="close js-remove">×</button>
     <h3>Create a Playlist</h3>
   </div>
   <div class="modal-body">
-    <form class="new-playlist">
+    <form class="new-playlist" name="new-playlist" >
       <label for="name">Name</label>
       <input name="name" type="text" value="">
       <label for="description">Description</label>
       <input name="description" type="text" value="">
+      <input type="submit" class="hidden">
     </form>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn js-remove">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
+    <a href="#" class="btn js-remove">Cancel</a>
+    <a href="#" class="btn btn-primary js-submit">Create</a>
   </div>
 </div>
