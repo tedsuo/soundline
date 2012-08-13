@@ -6,4 +6,8 @@ SL.PlaylistList = Backbone.Collection.extend({
     return SL.current_user.id+'/playlists';
   },
 
+  destroyByCid: function(cid,o){
+    var model = this.getByCid(cid);
+    if(model) model.destroy();
+  }
 });
