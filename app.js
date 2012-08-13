@@ -25,6 +25,7 @@ var mongo_connection = new Mongolian(MONGO_URL);
 var db = mongo_connection.db('soundline'); 
 var users = db.collection('users');
 var playlists = db.collection('playlists');
+var tracks = db.collection('tracks');
 
 // http server
 var app = express();
@@ -116,6 +117,51 @@ app.delete('/:user_id/playlists/:id',function(req,res){
     user_id:req.params.user_id, 
   };
   playlists.remove(playlist,function(err){
+    if(err) return res.send(500,err.toString());
+    res.end('',200); 
+  });
+  tracks.remove({playlist_id:playlist.id});
+});
+
+// TRACKS 
+
+app.put('/:playlist_id/tracks/:id',function(req,res){
+  bufferRequest(req,function(err,data){
+    if(err) return res.send(500,err.toString());
+    var track = {
+      id: req.params.id,
+      playlist_id:req.params.playlist_id, 
+      json:data
+    };
+    tracks.update({id:track.id},track,true,function(err){
+      if(err) return res.send(500,err.toString());
+      res.end('',200); 
+    });
+  });
+});
+
+app.get('/:playlist_id/tracks',function(req,res){
+  var playlist_id = req.params.playlist_id;
+  var response = [];
+  tracks 
+    .find({playlist_id:playlist_id})
+    .forEach(function(tracks){
+      response.push(tracks.json);
+    },function(err){
+      if(err) return res.send(500,err.toString());
+      var json = '['+response.join(',')+']'
+      res.set('Content-Type','application/json');
+      res.set('Content-Length',json.length);
+      res.send(json);
+    });
+});
+
+app.delete('/:playlist_id/tracks/:id',function(req,res){
+  var track = {
+    id: req.params.id,
+    playlist_id: req.params.playlist_id
+  };
+  tracks.remove(track,function(err){
     if(err) return res.send(500,err.toString());
     res.end('',200); 
   });
