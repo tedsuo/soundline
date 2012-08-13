@@ -13,6 +13,7 @@ SL.EditPlaylistView = Backbone.View.extend({
     var params = SL.formToParams($('form',this.$el));
     this.playlist.save(params);
     this.remove();
+    return false;
   },
 
   render: function(){

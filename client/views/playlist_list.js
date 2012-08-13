@@ -35,6 +35,7 @@ SL.PlaylistListView = Backbone.View.extend({
     });
     $('body').append(form.el);
     form.render();
+    return false;
   },
 
   editPlaylist: function(e){
@@ -45,6 +46,7 @@ SL.PlaylistListView = Backbone.View.extend({
     });
     $('body').append(form.el);
     form.render();
+    return false;
   },
 
   deletePlaylist: function(e){
