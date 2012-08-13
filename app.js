@@ -1,9 +1,10 @@
 /*
  * DEPENDENCIES
  */
+var _ = require('underscore');
 var express = require('express');
 var stitchit = require('stitchit');
-var redis = require('redis');
+var Mongolian = require('mongolian');
 var bufferRequest = require('./lib/buffer_request');
 
 /*
@@ -13,24 +14,20 @@ var PORT = process.env.PORT || 80;
 var PUBLIC_DIR = __dirname + '/client';
 var TEMPLATE_PATH = PUBLIC_DIR + '/templates/';
 var TEMPLATE_NAMESPACE = 'SL.t';
-
+var MONGO_URL = process.env.MONGOLAB_URI || 'localhost'
 
 /*
  * SETUP
  */
 
-// redis connection
-var db, redis_config;
-if (process.env.REDISTOGO_URL) {
-  redis_config = require("url").parse(process.env.REDISTOGO_URL);
-  db = redis.createClient(redis_config.port, redis_config.hostname);
-  db.auth(redis_config.auth.split(":")[1]);
-} else { 
-  db = redis.createClient();
-}
+// db connection
+var mongo_connection = new Mongolian(MONGO_URL);
+var db = mongo_connection.db('soundline'); 
+var users = db.collection('users');
+var playlists = db.collection('playlists');
 
 // http server
-app = express();
+var app = express();
 // serve up all the static files, no minification or gzipping
 app.use(express.static(PUBLIC_DIR));
 // start listening once everything is set up
@@ -61,7 +58,8 @@ app.get('/oauth',function(req,res){
 app.put('/users/:id',function(req,res){
   bufferRequest(req,function(err,data){
     if(err) return res.send(500,err.toString());
-    db.set('user:'+req.params.id, data, function(err){
+    var user_data = {id:req.params.id, json:data};
+    users.update({id:user_data.id},user_data,true,function(err){
       if(err) return res.send(500,err.toString());
       res.end('',200); 
     });
@@ -69,11 +67,11 @@ app.put('/users/:id',function(req,res){
 });
 
 app.get('/users/:id',function(req,res){
-  db.get('user:'+req.params.id,function(err,reply){
+  users.findOne({id:req.params.id},function(err,user){
     if(err) return res.send(500,err.toString());
-    if(reply === null) return res.send(404);
+    if(_.isEmpty(user)) return res.send(404);
     res.set('Content-Type','application/json');
-    res.set('Content-Length',reply.length);
-    res.send(reply);
+    res.set('Content-Length',user.json.length);
+    res.send(user.json);
   });
 });
