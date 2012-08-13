@@ -2,6 +2,7 @@ SL.PlaylistListView = Backbone.View.extend({
   
   events:{
     'click #new-playlist-btn': 'newPlaylist',
+    'click .js-playlist-btn': 'setActive',
     'dblclick .js-playlist-btn': 'editPlaylist',
     'click .js-delete': 'deletePlaylist'
   },
@@ -12,6 +13,7 @@ SL.PlaylistListView = Backbone.View.extend({
     this.playlists.on('add',this.render,this);
     this.playlists.on('remove',this.render,this);
     this.playlists.on('change',this.render,this);
+    this.playlists.on('set_active',this.render,this);
     this.playlists.on('reset',this.render,this);
   },
 
@@ -25,7 +27,7 @@ SL.PlaylistListView = Backbone.View.extend({
   getData: function(){
     return {
       playlists: this.playlists,
-      selected_playlist_cid: this.selected_playlist_cid
+      selected_playlist_cid: this.playlists.getActiveCid()
     }
   },
 
@@ -39,7 +41,6 @@ SL.PlaylistListView = Backbone.View.extend({
   },
 
   editPlaylist: function(e){
-    console.log(e);
     var cid = $(e.currentTarget).data('cid');
     var form = new SL.EditPlaylistView({
       playlist: this.playlists.getByCid(cid)
@@ -51,6 +52,18 @@ SL.PlaylistListView = Backbone.View.extend({
 
   deletePlaylist: function(e){
     var cid = $(e.currentTarget).data('cid');
-    this.playlists.destroyByCid(cid);
+    var p = this.playlists.getByCid(cid);
+    var msg = 'Do you want to delete the playlist "'+p.get('name')+'"?\n\nOr do you just have fat fingers?';
+    if( window.confirm(msg)){
+      p.destroy();
+    }
+    return false;
+  },
+
+  setActive: function(e){
+    var cid = $(e.currentTarget).data('cid');
+    var playlist = this.playlists.setActive(cid);
+    return false;
   }
+
 });
