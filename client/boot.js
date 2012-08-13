@@ -15,7 +15,7 @@ SL.boot = function(){
   // once the user is setup, show the media player 
   SL.current_user.on('initialized', function(o){
     SL.player = new SL.Player(o);
-
+    SL.player.fetch();
     SL.player_view = new SL.PlayerView({
       el: SL.root_element,
       model: SL.player
