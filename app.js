@@ -54,7 +54,8 @@ app.get('/oauth',function(req,res){
   res.send('<script src="//connect.soundcloud.com/sdk.js"></script>');
 });
 
-// create/update a user's metadata
+// USERS 
+
 app.put('/users/:id',function(req,res){
   bufferRequest(req,function(err,data){
     if(err) return res.send(500,err.toString());
@@ -75,3 +76,33 @@ app.get('/users/:id',function(req,res){
     res.send(user.json);
   });
 });
+
+// PLAYLISTS
+
+app.post('/:user_id/playlists',function(req,res){
+  bufferRequest(req,function(err,data){
+    if(err) return res.send(500,err.toString());
+    var playlist = {user_id:req.params.user_id, json:data};
+    playlists.insert(playlist,function(err){
+      if(err) return res.send(500,err.toString());
+      res.end('',200); 
+    });
+  });
+});
+
+app.get('/:user_id/playlists',function(req,res){
+  var user_id = req.params.user_id;
+  var response = [];
+  playlists
+    .find({user_id:user_id})
+    .forEach(function(playlist){
+      response.push(playlist.json);
+    },function(err){
+      if(err) return res.send(500,err.toString());
+      var json = '['+response.join(',')+']'
+      res.set('Content-Type','application/json');
+      res.set('Content-Length',json.length);
+      res.send(json);
+    });
+});
+
