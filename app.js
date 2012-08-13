@@ -79,11 +79,15 @@ app.get('/users/:id',function(req,res){
 
 // PLAYLISTS
 
-app.post('/:user_id/playlists',function(req,res){
+app.put('/:user_id/playlists/:id',function(req,res){
   bufferRequest(req,function(err,data){
     if(err) return res.send(500,err.toString());
-    var playlist = {user_id:req.params.user_id, json:data};
-    playlists.insert(playlist,function(err){
+    var playlist = {
+      id: req.params.id,
+      user_id:req.params.user_id, 
+      json:data
+    };
+    playlists.update({id:playlist.id},playlist,true,function(err){
       if(err) return res.send(500,err.toString());
       res.end('',200); 
     });
@@ -105,4 +109,16 @@ app.get('/:user_id/playlists',function(req,res){
       res.send(json);
     });
 });
+
+app.delete('/:user_id/playlists/:id',function(req,res){
+  var playlist = {
+    id: req.params.id,
+    user_id:req.params.user_id, 
+  };
+  playlists.remove(playlist,function(err){
+    if(err) return res.send(500,err.toString());
+    res.end('',200); 
+  });
+});
+
 
