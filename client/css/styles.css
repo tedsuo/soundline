@@ -4,6 +4,9 @@ background: url("/img/noise.png") #F76700;
 .clear{
 clear:both;
 }
+.clickable{
+cursor:pointer;
+}
 #splash{
 margin-top:5%;
 }
@@ -48,6 +51,11 @@ a.big-action-button.orange:hover { border-color: #832316; }
 
 #player-container{
 margin-top:80px;
+}
+@media (max-width: 979px) {
+  #player-container{
+    margin-top:0;
+  }
 }
 #player-bar{
 height: 60px;
