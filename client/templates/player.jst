@@ -1,16 +1,21 @@
 <div class="navbar navbar-fixed-top">
   <div id="" class="navbar-inner">
     <div id="player-bar" class="container-fluid">
-      <span class="brand player-text">SoundLine</span>
-      <div class="pull-right player-text">
-        <a href="<%= SL.current_user.get('permalink_url') %>" target="_blank">
-          <% if(SL.current_user.has('avatar_url')){ %>
-            <img class="user-icon" src="<%= SL.current_user.get('avatar_url') %>" />
-          <% } %>
-          <%= SL.current_user.get('username') %>
-        </a>
-        &nbsp;&nbsp;
-        <a href="/"> logout </a>
+      <div class="row">
+        <div class="pull-right player-text">
+          <a href="<%= SL.current_user.get('permalink_url') %>" target="_blank">
+            <% if(SL.current_user.has('avatar_url')){ %>
+              <img class="user-icon" src="<%= SL.current_user.get('avatar_url') %>" />
+            <% } %>
+          </a>
+          <a class="label label-inverse" href="<%= SL.current_user.get('permalink_url') %>" target="_blank">
+            <%= SL.current_user.get('username') %>
+          </a>
+          &nbsp;&nbsp;
+          <a href="/" class="btn btn-inverse"> logout </a>
+        </div>
+        <h1 class="logo player-text span2">SoundLine</h1>
+        <div id="current-track-viewer" class="well span5 offset2"></div>
       </div>
     </div>
   </div>
