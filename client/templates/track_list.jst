@@ -7,21 +7,21 @@
 <% } else { %>
   <h2>Welcome to SoundLine</h2>
 <% } %>
-<table id="track-list" class="table">
+<table id="track-list" class="table table-condensed">
   <thead>
     <tr>
-      <th>#</th>
+      <th class="hidden-phone">#</th>
       <th>Track</th>
-      <th>User</th>
+      <th class="hidden-phone">User</th>
       <th>Duration</th>
     </tr>
   </thead>
   <tbody>
     <% tracks.forEach(function(track,i){ %>
       <tr>
-        <td><%= i+1 %></td>
+        <td class="hidden-phone"><%= i+1 %></td>
         <td><%= track.get('title') %></td>
-        <td><a href="<%= track.get('user_url')%>" target="_blank"><%= track.get('username') %></a></td>
+        <td class="hidden-phone"><a href="<%= track.get('user_url')%>" target="_blank"><%= track.get('username') %></a></td>
         <td><%= track.get('duration') %></td>
       </tr>
     <% }) %>

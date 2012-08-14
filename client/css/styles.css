@@ -114,3 +114,10 @@ line-height:40px;
 #play-btn span{
 padding-left: 11px;
 }
+
+#track-list tbody {
+  cursor:pointer;
+}
+#track-list tbody tr:hover td{
+background-color:#3399f5;
+}
