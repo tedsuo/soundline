@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <script src="//connect.soundcloud.com/sdk.js"></script>
+  </head>
+  <body>
+    <script>
+      SC.initialize({
+        client_id: '0b4d05b2603939dff6ebf1f128ae7f1c',
+        redirect_uri: 'http://soundline.tedsuo.com/oauth' 
+      });
+      SC.connect(function() {
+        console.log('can haz soundcloud?');
+      });
+    </script>
+  </body>
+</html>
