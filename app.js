@@ -5,7 +5,7 @@ var _ = require('underscore');
 var express = require('express');
 var stitchit = require('stitchit');
 var Mongolian = require('mongolian');
-var bufferRequest = require('./lib/buffer_request');
+var buffBody = require('./lib/buff_body');
 
 /*
  * CONSTANTS
@@ -57,14 +57,11 @@ app.get('/oauth',function(req,res){
 
 // USERS 
 
-app.put('/users/:id',function(req,res){
-  bufferRequest(req,function(err,data){
+app.put('/users/:id', buffBody, function(req,res){
+  var user_data = {id:req.params.id, json:req.buffBody};
+  users.update({id:user_data.id},user_data,true,function(err){
     if(err) return res.send(500,err.toString());
-    var user_data = {id:req.params.id, json:data};
-    users.update({id:user_data.id},user_data,true,function(err){
-      if(err) return res.send(500,err.toString());
-      res.end('',200); 
-    });
+    res.end('',200); 
   });
 });
 
@@ -80,18 +77,15 @@ app.get('/users/:id',function(req,res){
 
 // PLAYLISTS
 
-app.put('/:user_id/playlists/:id',function(req,res){
-  bufferRequest(req,function(err,data){
+app.put('/:user_id/playlists/:id', buffBody, function(req,res){
+  var playlist = {
+    id: req.params.id,
+    user_id:req.params.user_id, 
+    json:req.buffBody
+  };
+  playlists.update({id:playlist.id},playlist,true,function(err){
     if(err) return res.send(500,err.toString());
-    var playlist = {
-      id: req.params.id,
-      user_id:req.params.user_id, 
-      json:data
-    };
-    playlists.update({id:playlist.id},playlist,true,function(err){
-      if(err) return res.send(500,err.toString());
-      res.end('',200); 
-    });
+    res.end('',200); 
   });
 });
 
@@ -125,18 +119,15 @@ app.delete('/:user_id/playlists/:id',function(req,res){
 
 // TRACKS 
 
-app.put('/:playlist_id/tracks/:id',function(req,res){
-  bufferRequest(req,function(err,data){
+app.put('/:playlist_id/tracks/:id',buffBody,function(req,res){
+  var track = {
+    id: req.params.id,
+    playlist_id:req.params.playlist_id, 
+    json:req.buffBody
+  };
+  tracks.update({id:track.id},track,true,function(err){
     if(err) return res.send(500,err.toString());
-    var track = {
-      id: req.params.id,
-      playlist_id:req.params.playlist_id, 
-      json:data
-    };
-    tracks.update({id:track.id},track,true,function(err){
-      if(err) return res.send(500,err.toString());
-      res.end('',200); 
-    });
+    res.end('',200); 
   });
 });
 
