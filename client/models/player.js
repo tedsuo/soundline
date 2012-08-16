@@ -1,7 +1,7 @@
 SL.Player = Backbone.Model.extend({
   
   initialize: function(o){
-    this.playlists = new SL.PlaylistList();
+    this.playlists = o.playlists || new SL.PlaylistList();
   },
 
   getPlaylists: function(){
