@@ -14,15 +14,14 @@ var PORT = process.env.PORT || 80;
 var PUBLIC_DIR = __dirname + '/client';
 var TEMPLATE_PATH = PUBLIC_DIR + '/templates/';
 var TEMPLATE_NAMESPACE = 'SL.t';
-var MONGO_URL = process.env.MONGOLAB_URI || 'localhost'
+var MONGO_URL = process.env.MONGOLAB_URI || 'localhost/soundline'
 
 /*
  * SETUP
  */
 
 // db connection
-var mongo_connection = new Mongolian(MONGO_URL);
-var db = mongo_connection.db('soundline'); 
+var db = new Mongolian(MONGO_URL);
 var users = db.collection('users');
 var playlists = db.collection('playlists');
 var tracks = db.collection('tracks');
