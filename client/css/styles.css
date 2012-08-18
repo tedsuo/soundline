@@ -52,16 +52,6 @@ a.big-action-button.orange:hover { border-color: #832316; }
 #player-container{
 margin-top:86px;
 }
-@media (max-width: 979px) {
-  #player-container{
-    margin-top:0;
-  }
-  #current-track-viewer{
-    margin-top:15px;
-    margin-bottom:15px;
-  }
-}
-
 .logo{
 
 }
@@ -72,10 +62,15 @@ padding:4px;
 min-height: 50px;
 }
 .user-icon{
-height:35px;
+height:32px;
+border-radius:6px;
 }
 .player-text{
 margin-top:20px;
+}
+#player-controls{
+width:130px;
+float:left;
 }
 .player-control{
 border-radius:50%;
@@ -142,4 +137,38 @@ display:none;
 }
 #track-list tbody tr:hover td{
 background-color:#3399f5;
+color:#ffffff;
 }
+#track-list tbody tr:hover a{
+color:#ffffff;
+}
+.active-track, .active-track td{
+background-color:#ff6600;
+}
+.active-track, .active-track a{
+color:#ffffff;
+}
+
+@media (max-width: 979px) {
+  #player-container{
+    margin-top:0;
+  }
+  #current-track-viewer{
+    margin-top:15px;
+    margin-bottom:15px;
+  }
+}
+
+@media (max-width: 800px) {
+  .player-text{
+    margin-top:0px;
+  }
+  #play-btn{
+    margin: 10px 5px;
+  }
+  .player-control{
+    margin: 15px 5px;
+  }
+}
+
+
