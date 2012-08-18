@@ -4,5 +4,15 @@ SL.Track = Backbone.Model.extend({
   },
   initialize: function(){
     if(!this.has('id')) this.set({ 'id': SL.uid() });
+    this.active = false;
+  },
+  isActive: function(){
+    return this.active;
+  },
+  activate: function(){
+    this.active = true;
+  },
+  deactivate: function(){
+    this.active =  false;
   }
 });
