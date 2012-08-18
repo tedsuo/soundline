@@ -7,13 +7,50 @@ SL.Playlist = Backbone.Model.extend({
 
   initialize: function(){
     if(!this.has('id')) this.set({ 'id': SL.uid() });
-    this.tracks = new SL.TrackList([],{ playlist: this, fetch:true });
+    this.tracks = new SL.TrackList([],{ playlist: this });
+    this.tracks.fetch();
+    this.active_track = null;
   },
   
   getTracks: function(){
     return this.tracks;
   },
   
+  getActiveTrack: function(){
+    if(_.isEmpty(this.active_track)){
+      var track = this.getNextTrack();
+      this.setActiveTrack(track);
+      return track;
+    }
+    return this.active_track;
+  },
+
+  setActiveTrack: function(track){
+    if(_.isString(track)) track = this.tracks.get(track);
+    if(this.active_track) this.active_track.deactivate();
+    this.active_track = track;
+    this.active_track.activate();
+    this.trigger('change_track',track);
+  },
+
+  getNextTrack: function(){
+    var tracks = this.tracks;
+    if(this.length === 0) return null;
+    if(_.isEmpty(this.active_track)) return tracks.at(0);
+    var next_index = tracks.indexOf(this.active_track) + 1;
+    if(next_index < tracks.length) return tracks.at(next_index);
+    return tracks.at(0);
+  },
+
+  getPrevTrack: function(){
+    var tracks = this.tracks;
+    if(this.length === 0) return null;
+    if(_.isEmpty(this.active_track)) return tracks.at(this.length-1);
+    var prev_index = tracks.indexOf(this.active_track) - 1;
+    if(prev_index < 0) return tracks.at(this.length-1);
+    return tracks.at(prev_index);
+  },
+
   addTracks: function(items){
     var tracks = this.tracks;
     _.forEach(items,function(item){

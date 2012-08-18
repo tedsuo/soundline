@@ -36,5 +36,10 @@ SL.PlaylistList = Backbone.Collection.extend({
   
   getActiveCid: function(){
     if(this.active) return this.active.cid;
+  },
+
+  getActiveTrack: function(){
+    if(this.active) return this.active.getActiveTrack();
+    else return new SL.Track();
   }
 });
