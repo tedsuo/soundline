@@ -1,6 +1,7 @@
 SL.TracklistView = Backbone.View.extend({
   events:{
-    'submit .js-add-track-form': 'newTrack'
+    'submit .js-add-track-form': 'newTrack',
+    'click .js-track': 'changeTrack'
   },
 
   render: function(){
@@ -34,12 +35,20 @@ SL.TracklistView = Backbone.View.extend({
 
     this.playlist = p;
     this.playlist.on('add_tracks',this.render,this);
+    this.playlist.on('change_track',this.render,this);
     this.render();
   },
 
   newTrack: function(){
     var url = $('.js-track-url-field',this.$el).val()
     if(!_.isEmpty(url)) this.playlist.addTracksFromUrl(url);
+    return false;
+  },
+
+  changeTrack: function(e){
+    var id = $(e.currentTarget).data('id');
+    this.playlist.setActiveTrack(id);
+    this.render();
     return false;
   }
 
