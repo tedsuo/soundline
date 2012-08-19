@@ -18,6 +18,17 @@ SL.boot = function(){
     SL.playlists = new SL.PlaylistList();
     SL.playlists.fetch();
 
+    $('html').on('keydown',function(event){
+      switch(event.which){
+        case SL.KEYPRESS_PREV:
+          SL.playlists.prevTrack();
+          return false;
+        case SL.KEYPRESS_NEXT:
+          SL.playlists.nextTrack();
+          return false;
+      }
+    });
+
     // setup music player
     SL.player = new SL.Player({
       playlists: SL.playlists
