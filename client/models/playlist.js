@@ -79,6 +79,11 @@ SL.Playlist = Backbone.Model.extend({
 
   addTracksFromUrl: function(url){
     var playlist = this;
+    
+    // SC can't resolve /you endpoints, but we know what to do
+    if(url.match('/you/tracks')) return this.addTracksFromSoundcloudUser(SL.current_user);
+    if(url.match('/you/favorites')) return this.addFavoritesFromSoundcloudUser(SL.current_user);
+
     SC.get('/resolve',{url:url},function(results){
       // whatever it is, if it has tracks, we want them
       if(_.isObject(results) && _.isArray(results.tracks)){
@@ -96,9 +101,13 @@ SL.Playlist = Backbone.Model.extend({
 
   addTracksFromSoundcloudObject: function(result){
     if(!_.isObject(result)) return;
+
     switch(result.kind){
       case 'user':
         this.addTracksFromSoundcloudUser(result);
+        break;
+      case 'group':
+        this.addTracksFromSoundcloudGroup(result);
         break;
     }
   },
@@ -107,6 +116,22 @@ SL.Playlist = Backbone.Model.extend({
     var playlist = this;
     var tracks = this.tracks;
     SC.get('/users/'+user.id+'/tracks',function(results){
+      playlist.addTracks(results);
+    });
+  },
+
+  addFavoritesFromSoundcloudUser: function(user){
+    var playlist = this;
+    var tracks = this.tracks;
+    SC.get('/users/'+user.id+'/favorites',function(results){
+      playlist.addTracks(results);
+    });
+  },
+
+  addTracksFromSoundcloudGroup: function(group){
+    var playlist = this;
+    var tracks = this.tracks;
+    SC.get('/groups/'+group.id+'/tracks',function(results){
       playlist.addTracks(results);
     });
   }
