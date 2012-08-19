@@ -73,6 +73,18 @@ app.put('/users/:id', express.bodyParser(), function(req,res){
   });
 });
 
+app.get('/users/:id', function(req,res){
+  users.findOne({id:req.params.id},function(err,user){
+    if(err) return res.send(500,err.toString());
+    if(_.isEmpty(user)) return res.send(404);
+    delete user._id;
+    var json = JSON.stringify(user);
+    res.set('Content-Type','application/json');
+    res.set('Content-Length',json.length);
+    res.send(json);
+  });
+});
+
 // PLAYLISTS
 
 app.put('/:user_id/playlists/:id', buffBody, function(req,res){
