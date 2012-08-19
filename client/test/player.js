@@ -2,11 +2,11 @@ describe('Player', function(){
   var player;
   beforeEach(function(){
     SL.current_user = new SL.User({id:SL.uid()});
-    player = new SL.PlaylistList();
+    player = new SL.Player();
   });
   it('should create a playlist',function(done){
     player.on('sync',function(){
-      var new_player = new SL.PlaylistList();
+      var new_player = new SL.Player();
       new_player.fetch({
         success: function(){
           new_player.models.length.should.equal(1);
@@ -27,7 +27,7 @@ describe('Player', function(){
     player.create({name:'second',description:'bar'});
     var cid = player.at(0).cid;
     player.on('sync',function(){
-      var new_player = new SL.PlaylistList();
+      var new_player = new SL.Player();
       new_player.fetch({
         success: function(){
           new_player.models.length.should.equal(1);
