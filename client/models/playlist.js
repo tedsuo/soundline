@@ -26,11 +26,16 @@ SL.Playlist = Backbone.Model.extend({
   },
 
   setActiveTrack: function(track){
+    var is_playing = false;
     if(_.isString(track)) track = this.tracks.get(track);
-    if(this.active_track) this.active_track.deactivate();
+    if(this.active_track){
+      is_playing = this.active_track.isPlaying();
+      this.active_track.deactivate();
+    }
     this.active_track = track;
     this.active_track.activate();
     this.trigger('change_track',track,this);
+    if(is_playing) this.active_track.play();
   },
 
   getNextTrack: function(){
