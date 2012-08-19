@@ -48,6 +48,7 @@ SL.TracklistView = Backbone.View.extend({
   changeTrack: function(e){
     var id = $(e.currentTarget).data('id');
     this.playlist.setActiveTrack(id);
+    this.playlist.getActiveTrack().play();
     this.render();
     return false;
   }
