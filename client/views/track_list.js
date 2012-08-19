@@ -5,7 +5,6 @@ SL.TracklistView = Backbone.View.extend({
   },
 
   render: function(){
-    console.log('render');
     this.$el.html(SL.t.track_list(this.getData()));
   },
 
