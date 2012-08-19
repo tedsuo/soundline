@@ -29,10 +29,10 @@ SL.PlaylistList = Backbone.Collection.extend({
   },
 
   setActive: function(track,playlist){
-    if(playlist.cid !== this.getActiveCid()){
-      this.active = playlist;
-      this.trigger('set_active',playlist);
-    }
+    if(playlist.cid === this.getActiveCid()) return;
+    if(this.active) this.active.deactivate();
+    this.active = playlist;
+    this.trigger('set_active',playlist);
   },
   
   clearActive: function(){
