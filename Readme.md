@@ -7,7 +7,7 @@ A simple playlist application for soundcloud. Check it out at http://soundline.t
 - create and store multiple playlists
 - add tracks from any sound-related soundcloud url
 - edit, update, and delete everything
-- ipad-friendly 
+- mobile-friendly 
 
 # Code Overview
 
@@ -16,7 +16,8 @@ Code consists of two parts: a MVC javascript client application, and a simple no
 - *no security-* please enjoy XSSing each other if you can figure out how.
 - *no test coverage-* since this app is never actually going to be refactored, I only created tests when I wanted an easy way to work through a problem.  Normally I would aim for much higher test coverage.
 - *no compression-* since this is a demo app, I left all of the client files uncompressed so you can have a look at them.  In a real app, everything would be minified and stitched together. 
-- *feature incomplete-* there are plenty of fun features I would love to add, but I wanted to respect the time requirement for the coding challenge.  So it only does the basics requested in the challenge documentation.
+- *feature incomplete-* there are plenty of fun features I would love to add, but I wanted to respect the time requirement for the coding challenge (and have a vacation).  So it only does the basics requested in the challenge documentation. Also it loads a max of 50 items per url, dodging the bullet with your 40,000+ Abelton Live group.
+- *IE can die-* I didn't even bother to check.
 
 Besides all that, it works rather well. :)
 
