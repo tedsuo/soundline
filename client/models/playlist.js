@@ -30,7 +30,7 @@ SL.Playlist = Backbone.Model.extend({
     if(this.active_track) this.active_track.deactivate();
     this.active_track = track;
     this.active_track.activate();
-    this.trigger('change_track',track);
+    this.trigger('change_track',track,this);
   },
 
   getNextTrack: function(){

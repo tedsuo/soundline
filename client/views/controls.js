@@ -14,18 +14,18 @@ SL.ControlsView = Backbone.View.extend({
   render: function(){
     this.$el.html(SL.t.controls());
     this.$viewer = $('#current-track-viewer',this.el);
-    this.$viewer.html(SL.t.active_track({track:this.playlists.getActiveTrack()}));
+    if(this.playlists.getActiveTrack()){
+      this.$viewer.html(SL.t.active_track({track:this.playlists.getActiveTrack()}));
+    }
     return this;
   },
 
   nextTrack: function(){
-    var track = this.playlists.getActive().getNextTrack();
-    this.playlists.getActive().setActiveTrack(track);
+    this.playlists.nextTrack();
   },
 
   prevTrack: function(){
-    var track = this.playlists.getActive().getPrevTrack();
-    this.playlists.getActive().setActiveTrack(track);
+    this.playlists.prevTrack();
   },
 
   playToggle: function(){}

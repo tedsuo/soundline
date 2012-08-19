@@ -50,6 +50,25 @@ SL.PlaylistList = Backbone.Collection.extend({
 
   getActiveTrack: function(){
     if(this.active) return this.active.getActiveTrack();
-    else return new SL.Track();
-  }
+  },
+
+  getNextTrack: function(){
+    return this.getActive().getNextTrack();
+  },
+
+  getPrevTrack: function(){
+    return this.getActive().getPrevTrack();
+  },
+
+  setActiveTrack: function(track){
+    this.getActive().setActiveTrack(track) 
+  },
+
+  nextTrack: function(){
+    this.setActiveTrack(this.getNextTrack());
+  },
+
+  prevTrack: function(){
+    this.setActiveTrack(this.getPrevTrack());
+  },
 });
