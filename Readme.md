@@ -1,6 +1,6 @@
 # Soundline
 
-A simple playlist application for soundcloud.
+A simple playlist application for soundcloud. Check it out at http://soundline.tedsuo.com
 
 ## Features
 
