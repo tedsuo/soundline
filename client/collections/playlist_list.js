@@ -19,20 +19,24 @@ SL.PlaylistList = Backbone.Collection.extend({
     if(model) model.destroy();
   },
 
-  selectPlaylist: function(cid){
-    this.selected_playlist = this.getByCid(cid);
+  selectPlaylist: function(id){
+    this.selected_playlist = this.get(id);
     this.trigger('select_playlist',this.selected_playlist);
   },
 
-  getSelectedPlaylistCid: function(){
-    if(this.selected_playlist) return this.selected_playlist.cid;
+  getSelectedPlaylistId: function(){
+    if(this.selected_playlist) return this.selected_playlist.id;
   },
 
   setActive: function(track,playlist){
+    if(_.isString(playlist)) playlist = this.get(playlist);
     if(playlist.cid === this.getActiveCid()) return;
     if(this.active) this.active.deactivate();
     this.active = playlist;
     this.trigger('set_active',playlist);
+    SL.current_user.save({
+      active_playlist_id: this.active.id
+    });
   },
   
   clearActive: function(){

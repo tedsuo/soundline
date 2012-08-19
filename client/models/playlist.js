@@ -8,6 +8,7 @@ SL.Playlist = Backbone.Model.extend({
   initialize: function(){
     if(!this.has('id')) this.set({ 'id': SL.uid() });
     this.tracks = new SL.TrackList([],{ playlist: this });
+    this.tracks.on('reset',this.addTracks,this);
     this.tracks.fetch();
     this.active_track = null;
   },
@@ -30,16 +31,14 @@ SL.Playlist = Backbone.Model.extend({
   },
 
   setActiveTrack: function(track){
-    var is_playing = false;
     if(_.isString(track)) track = this.tracks.get(track);
     if(this.active_track){
-      is_playing = this.active_track.isPlaying();
       this.active_track.deactivate();
     }
     this.active_track = track;
     this.active_track.activate();
+    SL.current_user.save({active_track_id:this.active_track.id});
     this.trigger('change_track',track,this);
-    if(is_playing) this.active_track.play();
   },
 
   getNextTrack: function(){
