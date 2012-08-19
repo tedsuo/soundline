@@ -56,21 +56,20 @@ app.get('/oauth',function(req,res){
 
 // USERS 
 
-app.put('/users/:id', buffBody, function(req,res){
-  var user_data = {id:req.params.id, json:req.buffBody};
-  users.update({id:user_data.id},user_data,true,function(err){
+app.put('/users/:id', express.bodyParser(), function(req,res){
+  var user_data = req.body;
+  user_data.id = req.params.id;
+  users.update({id:user_data.id},{$set:user_data},true,function(err,user){
     if(err) return res.send(500,err.toString());
-    res.end('',200); 
-  });
-});
-
-app.get('/users/:id',function(req,res){
-  users.findOne({id:req.params.id},function(err,user){
-    if(err) return res.send(500,err.toString());
-    if(_.isEmpty(user)) return res.send(404);
-    res.set('Content-Type','application/json');
-    res.set('Content-Length',user.json.length);
-    res.send(user.json);
+    users.findOne({id:user_data.id},function(err,user){
+      if(err) return res.send(500,err.toString());
+      if(_.isEmpty(user)) return res.send(404);
+      delete user._id;
+      var json = JSON.stringify(user);
+      res.set('Content-Type','application/json');
+      res.set('Content-Length',json.length);
+      res.send(json);
+    });
   });
 });
 
