@@ -17,7 +17,7 @@ SL.EditPlaylistView = Backbone.View.extend({
   },
 
   render: function(){
-   this.$el.html(SL.t.edit_playlist(this.getData()));
+   this.$el.html( SL.t.edit_playlist(this.getData()) );
    $('input',this.$el).first().focus();
    return this;
   },

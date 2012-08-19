@@ -15,29 +15,26 @@ SL.boot = function(){
   // once the user is setup, show the media player 
   SL.current_user.on('initialized', function(o){
     // setup playlists
-    SL.playlists = new SL.PlaylistList();
-    SL.playlists.fetch({
+    SL.player = new SL.Player();
+    SL.player.fetch({
       // load whatever the last thing the user was listning to
       success: function(){
         if(_.isEmpty(SL.current_user.get('active_playlist_id'))) return;
-        var p = SL.playlists.get(SL.current_user.get('active_playlist_id'));
+        var p = SL.player.get(SL.current_user.get('active_playlist_id'));
         var track_id = SL.current_user.get('active_track_id');
         
-        SL.playlists.setActive(null, p);
-        SL.playlists.selectPlaylist(p);
+        SL.player.setActive(null, p);
+        SL.player.selectPlaylist(p);
 
         if(_.isEmpty(track_id)) return;
         p.on('add_tracks',_.once(function(){
           p.setActiveTrack(SL.current_user.get('active_track_id'));
-          SL.playlists.pause(); 
+          SL.player.pause(); 
         })); 
       }
     });
 
     // setup music player
-    SL.player = new SL.Player({
-      playlists: SL.playlists
-    });
     SL.player_view = new SL.PlayerView({
       el: SL.root_element,
       model: SL.player

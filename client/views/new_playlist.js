@@ -6,18 +6,18 @@ SL.NewPlaylistView = Backbone.View.extend({
   },
   
   initialize: function(o){
-    this.playlists = o.playlists;
+    this.player = o.player;
   },
 
   submit: function(){
     var params = SL.formToParams($('form',this.$el));
-    this.playlists.create(params);
+    this.player.create(params);
     this.remove();
     return false;
   },
 
   render: function(){
-   this.$el.html(SL.t.new_playlist());
+   this.$el.html( SL.t.new_playlist() );
    $('input',this.$el).first().focus();
    return this;
   }

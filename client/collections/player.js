@@ -1,6 +1,5 @@
-// is it really called that? yes. yes it is.
 // Custom events: set_active
-SL.PlaylistList = Backbone.Collection.extend({
+SL.Player = Backbone.Collection.extend({
   model: SL.Playlist,
 
   url: function(){

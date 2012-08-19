@@ -8,13 +8,13 @@ SL.PlaylistListView = Backbone.View.extend({
   },
   
   initialize: function(o){
-    this.playlists = o.playlists;
+    this.player = o.player;
     this.selected_playlist_cid = 0;
-    this.playlists.on('add',this.render,this);
-    this.playlists.on('remove',this.render,this);
-    this.playlists.on('change',this.render,this);
-    this.playlists.on('select_playlist',this.render,this);
-    this.playlists.on('reset',this.render,this);
+    this.player.on('add',this.render,this);
+    this.player.on('remove',this.render,this);
+    this.player.on('change',this.render,this);
+    this.player.on('select_playlist',this.render,this);
+    this.player.on('reset',this.render,this);
   },
 
   render: function(){
@@ -26,14 +26,14 @@ SL.PlaylistListView = Backbone.View.extend({
 
   getData: function(){
     return {
-      playlists: this.playlists,
-      selected_playlist_id: this.playlists.getSelectedPlaylistId()
+      playlists: this.player,
+      selected_playlist_id: this.player.getSelectedPlaylistId()
     }
   },
 
   newPlaylist: function(){
     var form = new SL.NewPlaylistView({
-      playlists: this.playlists 
+      player: this.player 
     });
     $('body').append(form.el);
     form.render();
@@ -43,7 +43,7 @@ SL.PlaylistListView = Backbone.View.extend({
   editPlaylist: function(e){
     var id = $(e.currentTarget).data('id');
     var form = new SL.EditPlaylistView({
-      playlist: this.playlists.get(cid)
+      playlist: this.player.get(cid)
     });
     $('body').append(form.el);
     form.render();
@@ -52,7 +52,7 @@ SL.PlaylistListView = Backbone.View.extend({
 
   deletePlaylist: function(e){
     var id = $(e.currentTarget).data('id');
-    var p = this.playlists.get(id);
+    var p = this.player.get(id);
     var msg = 'Do you want to delete the playlist "'+p.get('name')+'"?\n\nOr do you just have fat fingers?';
     if( window.confirm(msg)){
       p.destroy();
@@ -62,7 +62,7 @@ SL.PlaylistListView = Backbone.View.extend({
 
   selectPlaylist: function(e){
     var id = $(e.currentTarget).data('id');
-    this.playlists.selectPlaylist(id);
+    this.player.selectPlaylist(id);
     return false;
   }
 

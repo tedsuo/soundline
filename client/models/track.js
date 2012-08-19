@@ -40,7 +40,7 @@ SL.Track = Backbone.Model.extend({
     return {
       onfinish: function(){
         track.is_playing = false;
-        SL.playlists.nextTrack();
+        SL.player.nextTrack();
       }
     }
   },

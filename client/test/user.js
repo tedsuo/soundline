@@ -7,7 +7,7 @@ describe('User',function(){
       user.on('initialized',function(){
         SL.User.findById( user_id, function(err,u){
           if(err) return done(err);
-          u.get('id').should.equal(user_id);
+          u.get('id').should.equal(user_id.toString());
           u.get('username').should.equal(user_name);
           done();
         });

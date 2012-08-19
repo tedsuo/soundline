@@ -7,9 +7,9 @@ SL.ControlsView = Backbone.View.extend({
   },
 
   initialize: function(o){
-    this.playlists = o.playlists;
+    this.player = o.player;
     this.track = null;
-    this.playlists.on('change_track',this.changeTrack,this);
+    this.player.on('change_track',this.changeTrack,this);
   },
 
   render: function(){
@@ -29,7 +29,7 @@ SL.ControlsView = Backbone.View.extend({
 
   changeTrack: function(){
     if(this.track) this.track.off(null,null,this);
-    this.track = this.playlists.getActiveTrack();
+    this.track = this.player.getActiveTrack();
     this.onPlay();
     this.track.on('play',this.onPlay,this);
     this.track.on('pause',this.onPause,this);
@@ -37,15 +37,15 @@ SL.ControlsView = Backbone.View.extend({
   },
 
   nextTrack: function(){
-    this.playlists.nextTrack();
+    this.player.nextTrack();
   },
 
   prevTrack: function(){
-    this.playlists.prevTrack();
+    this.player.prevTrack();
   },
 
   playToggle: function(){
-    this.playlists.playToggle();
+    this.player.playToggle();
   },
 
   onPlay: function(){
