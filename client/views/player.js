@@ -1,6 +1,7 @@
 SL.PlayerView = Backbone.View.extend({
   
   events: {
+    'click #logout-btn': 'logout'
   },
   
   initialize: function(o){
@@ -31,6 +32,10 @@ SL.PlayerView = Backbone.View.extend({
       .setElement(document.getElementById('current-track'))
       .render();
     return this;
+  },
+
+  logout: function(){
+    SL.current_user.logout();
   },
   
   showTracks: function(playlist){
