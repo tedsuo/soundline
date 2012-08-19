@@ -12,7 +12,17 @@ SL.Playlist = Backbone.Model.extend({
     this.tracks.fetch();
     this.active_track = null;
   },
-  
+   
+  removeTrack: function(id){
+    var track = this.tracks.get(id);
+    if(!track) return;
+    if(track.isActive()){
+      this.setActiveTrack(this.getNextTrack())
+    }
+    track.destroy();
+    this.trigger('remove_track');
+  },
+
   getTracks: function(){
     return this.tracks;
   },

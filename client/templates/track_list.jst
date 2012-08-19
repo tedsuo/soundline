@@ -14,6 +14,7 @@
       <th>Track</th>
       <th class="hidden-phone">User</th>
       <th>Duration</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -23,6 +24,7 @@
         <td><%= track.get('title') %></td>
         <td class="hidden-phone"><a href="<%= track.get('user_url')%>" target="_blank"><%= track.get('username') %></a></td>
         <td><%=SL.timeFormat(track.get('duration')) %></td>
+        <td><i class="icon-minus-sign pull-right js-delete" data-id="<%= track.id %>" title="delete"></i></td>
       </tr>
     <% }) %>
   </tbody>

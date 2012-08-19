@@ -1,7 +1,8 @@
 SL.TracklistView = Backbone.View.extend({
   events:{
     'submit .js-add-track-form': 'newTrack',
-    'click .js-track': 'changeTrack'
+    'click .js-track': 'changeTrack',
+    'click .js-delete': 'deleteTrack'
   },
 
   render: function(){
@@ -35,6 +36,7 @@ SL.TracklistView = Backbone.View.extend({
     this.playlist = p;
     this.playlist.on('add_tracks',this.render,this);
     this.playlist.on('change_track',this.render,this);
+    this.playlist.on('remove_track',this.render,this);
     this.render();
   },
 
@@ -49,6 +51,12 @@ SL.TracklistView = Backbone.View.extend({
     this.playlist.setActiveTrack(id);
     this.playlist.getActiveTrack().play();
     this.render();
+    return false;
+  },
+
+  deleteTrack: function(e){
+    var id = $(e.currentTarget).data('id');
+    this.playlist.removeTrack(id);
     return false;
   }
 

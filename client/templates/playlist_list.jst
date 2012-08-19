@@ -5,7 +5,7 @@
       <li class="<% if(list.id === selected_playlist_id){ %> active<% } %>">
         <a href="#" class="js-playlist-btn" data-id="<%= list.id %>" rel="tooltip" title="<%= list.get('description') %>">
           <label class="pull-left clickable"><%= list.get('name') %></label>
-          <i class="icon-minus-sign pull-right js-delete" data-cid="<%= list.cid %>" title="delete"></i>
+          <i class="icon-minus-sign pull-right js-delete" data-id="<%= list.id %>" title="delete"></i>
           <div class="clear"></div>
         </a>
       </li>
