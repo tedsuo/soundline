@@ -6,7 +6,7 @@ SL.PlayerView = Backbone.View.extend({
   initialize: function(o){
     this.player = this.model || o.player;
     this.playlists = this.player.getPlaylists();
-    this.playlists.on('set_active',this.showTracks,this);
+    this.playlists.on('select_playlist',this.showTracks,this);
     
     this.playlists_view = new SL.PlaylistListView({
       playlists: this.playlists
@@ -17,6 +17,7 @@ SL.PlayerView = Backbone.View.extend({
     this.controls_view = new SL.ControlsView({
       playlists: this.playlists
     });
+    
   },
 
   render: function(){
@@ -33,7 +34,7 @@ SL.PlayerView = Backbone.View.extend({
     return this;
   },
   
-  showTracks: function(){
-    this.tracks_view.setPlaylist(this.playlists.getActive());
+  showTracks: function(playlist){
+    this.tracks_view.setPlaylist(playlist);
   }
 });

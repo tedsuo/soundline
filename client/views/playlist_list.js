@@ -2,7 +2,7 @@ SL.PlaylistListView = Backbone.View.extend({
   
   events:{
     'click #new-playlist-btn': 'newPlaylist',
-    'click .js-playlist-btn': 'setActive',
+    'click .js-playlist-btn': 'selectPlaylist',
     'dblclick .js-playlist-btn': 'editPlaylist',
     'click .js-delete': 'deletePlaylist'
   },
@@ -13,7 +13,7 @@ SL.PlaylistListView = Backbone.View.extend({
     this.playlists.on('add',this.render,this);
     this.playlists.on('remove',this.render,this);
     this.playlists.on('change',this.render,this);
-    this.playlists.on('set_active',this.render,this);
+    this.playlists.on('select_playlist',this.render,this);
     this.playlists.on('reset',this.render,this);
   },
 
@@ -27,7 +27,7 @@ SL.PlaylistListView = Backbone.View.extend({
   getData: function(){
     return {
       playlists: this.playlists,
-      selected_playlist_cid: this.playlists.getActiveCid()
+      selected_playlist_cid: this.playlists.getSelectedPlaylistCid()
     }
   },
 
@@ -60,9 +60,9 @@ SL.PlaylistListView = Backbone.View.extend({
     return false;
   },
 
-  setActive: function(e){
+  selectPlaylist: function(e){
     var cid = $(e.currentTarget).data('cid');
-    var playlist = this.playlists.setActive(cid);
+    this.playlists.selectPlaylist(cid);
     return false;
   }
 

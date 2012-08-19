@@ -11,17 +11,27 @@ SL.PlaylistList = Backbone.Collection.extend({
     this.on('destroy', function(playlist){
       if(playlist.cid == this.getActiveCid()) this.clearActive();
     });
+    this.on('change_track',this.setActive,this);
   },
+
   destroyByCid: function(cid,o){
     var model = this.getByCid(cid);
     if(model) model.destroy();
   },
 
-  setActive: function(cid){
-    var p = this.getByCid(cid);
-    if(p && (p.cid !== this.getActiveCid())){
-      this.active = p;
-      this.trigger('set_active');
+  selectPlaylist: function(cid){
+    this.selected_playlist = this.getByCid(cid);
+    this.trigger('select_playlist',this.selected_playlist);
+  },
+
+  getSelectedPlaylistCid: function(){
+    if(this.selected_playlist) return this.selected_playlist.cid;
+  },
+
+  setActive: function(track,playlist){
+    if(playlist.cid !== this.getActiveCid()){
+      this.active = playlist;
+      this.trigger('set_active',playlist);
     }
   },
   
