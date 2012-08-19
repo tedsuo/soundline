@@ -30,6 +30,7 @@ SL.ControlsView = Backbone.View.extend({
   changeTrack: function(){
     if(this.track) this.track.off(null,null,this);
     this.track = this.playlists.getActiveTrack();
+    this.onPlay();
     this.track.on('play',this.onPlay,this);
     this.track.on('pause',this.onPause,this);
     this.renderTrackViewer();
