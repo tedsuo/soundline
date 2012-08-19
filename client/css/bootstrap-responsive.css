@@ -57,7 +57,7 @@
   display: none !important;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   .visible-phone {
     display: inherit !important;
   }
@@ -135,7 +135,7 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
   body {
     padding-right: 20px;
     padding-left: 20px;
@@ -198,7 +198,7 @@
   }
 }
 
-@media (min-width: 800px) and (max-width: 979px) {
+@media (min-width: 850px) and (max-width: 979px) {
   .row {
     margin-left: -20px;
     *zoom: 1;
