@@ -38,9 +38,6 @@ SL.User = Backbone.Model.extend({
     user.save(user_data,{
       success: function(){
         user.trigger('initialized');
-      },
-      error: function(){
-        console.log('init failure');
       }
     });
   }
