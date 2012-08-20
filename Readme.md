@@ -24,7 +24,7 @@ Besides all that, it works rather well. :)
 ## Server
 
 ### app.js
-Simple node.js/mongodb backend.  Serves up the client files, builds the templates, and has RESTful endpoints for the various client-side models.  All id's are created on the client-side, no session storage or security.
+Simple node.js/mongoDB backend.  Serves up the client files, builds the templates, and has RESTful endpoints for the various client-side models.  All id's are created on the client-side, no session storage or security.
 
 ## Client
 Front-end is written using backbone.js, twitter bootstrap, and the SoundCloud javascript SDK.  It follows a "standard" application layout, and namespaces all of it's components under the SL namespace to avoid cluttering up the global namespace.  The app is seperated into the following pieces:
@@ -33,7 +33,7 @@ Front-end is written using backbone.js, twitter bootstrap, and the SoundCloud ja
 The only page of html that is actually loaded.  Basically, it's the build script for the application.
 
 ### config.js
-Contains all constants used by the application. Since it's always the first thing defined, it also defines the applicaiton namespace.
+Contains all constants used by the application. Since it's always the first thing defined, it also defines the application namespace.
 
 ### boot.js
 returns the SL.boot function, to be called once all the components have finished loading.  Initializes the application:
