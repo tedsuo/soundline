@@ -85,31 +85,28 @@ SL.Playlist = Backbone.Model.extend({
     if(url.match('/you/favorites')) return this.addFavoritesFromSoundcloudUser(SL.current_user);
 
     SC.get('/resolve',{url:url},function(results){
-      // whatever it is, if it has tracks, we want them
-      if(_.isObject(results) && _.isArray(results.tracks)){
-        results = results.tracks;
-      }
-
-      // kind of assuming the only array-like thing a url resolves too is a track list
-      if(_.isArray(results)){
-        playlist.addTracks(results);
-      } else { 
-        playlist.addTracksFromSoundcloudObject(results);
-      }
+      playlist.addTracksFromSoundcloudObject(results);
     });
   },
 
+  // inspect a result from soundcloud convert it into a set of tracks
   addTracksFromSoundcloudObject: function(result){
     if(!_.isObject(result)) return;
+    
+    // whatever it is, if it has tracks, we want them
+    if(_.isArray(result.tracks)) return this.addTracks(result.tracks);
+    
+    // beligerently assuming the only array-like thing a url resolves too is a track list
+    if(_.isArray(result)) return this.addTracks(result);
 
-    switch(result.kind){
-      case 'user':
-        this.addTracksFromSoundcloudUser(result);
-        break;
-      case 'group':
-        this.addTracksFromSoundcloudGroup(result);
-        break;
-    }
+    // check if it's a track 
+    if(result.kind === 'track') return this.addTracks([result]);
+
+    // check if it's a user object
+    if(result.kind === 'user') return this.addTracksFromSoundcloudUser(result);
+    
+    // check if it's a group object
+    if(result.kind === 'group') return this.addTracksFromSoundcloudGroup(result);
   },
 
   addTracksFromSoundcloudUser: function(user){
