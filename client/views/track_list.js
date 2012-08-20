@@ -25,6 +25,7 @@ SL.TracklistView = Backbone.View.extend({
     this.$loader = $('#track-loader',this.$el);
     this.$loading_bar = $('#track-loading-bar',this.$el);
     this.$fail_msg = $('.fail-msg',this.$el);
+    this.stopLoader();
   },
 
   showFailMsg: function(){
