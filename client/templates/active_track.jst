@@ -1,3 +1,8 @@
-<h4><%= track.get('title') %></h4>
-<h5 class="pull-left"><%= track.get('username') %></h5>
-<h5 id="current-time" class="pull-right"><%= SL.timeFormat(track.get('duration')) %></h5>
+<h4 id="current-track-title"><%= track.get('title') %></h4>
+<h5 id="current-track-user" class="pull-left"><%= track.get('username') %></h5>
+<h5 id="current-track-position" class="pull-right">
+  <span id="current-time"><%= SL.timeFormat(track.getPosition()) %></span>
+  <span class="current-time-divider">/</span>
+  <span id="current-track-duration"><%= SL.timeFormat(track.get('duration')) %></span>
+</h5>
+<div class="clear"></div>

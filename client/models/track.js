@@ -62,5 +62,9 @@ SL.Track = Backbone.Model.extend({
     this.is_playing = false;
     this.trigger('pause',this);
     if(this.stream) this.stream.pause();
+  },
+  getPosition: function(){
+    if(!this.stream) return 0; 
+    return this.stream.position;
   }
 });

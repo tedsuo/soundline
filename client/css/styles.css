@@ -53,13 +53,17 @@ a.big-action-button.orange:hover { border-color: #832316; }
 margin-top:86px;
 }
 .logo{
-
+color: #999999;
+text-shadow: 0 1px 0 #AAAAAA;
 }
 #current-track-viewer{
 margin-top:8px;
 margin-bottom:8px;
 padding:4px;
 min-height: 50px;
+}
+#current-track-title{
+color:#666666;
 }
 .user-icon{
 height:32px;

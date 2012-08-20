@@ -22,9 +22,14 @@ SL.ControlsView = Backbone.View.extend({
   },
 
   renderTrackViewer: function(){
-    if(this.track){
-      this.$viewer.html(SL.t.active_track({track:this.track}));
-    }
+    if(_.isEmpty(this.track)) return;
+    this.$viewer.html(SL.t.active_track({track:this.track}));
+    this.$track_position = $('#current-time',this.el);
+  },
+
+  renderTrackPosition: function(){
+    if(_.isEmpty(this.track)) return;
+    this.$track_position.html(SL.timeFormat(this.track.getPosition()));
   },
 
   changeTrack: function(){
@@ -49,13 +54,21 @@ SL.ControlsView = Backbone.View.extend({
   },
 
   onPlay: function(){
+    var controls = this;
     this.$play_icon.hide();
     this.$pause_icon.show();
+    this.position_interval_id = setInterval(function(){
+      controls.renderTrackPosition();
+    },250);
   },
 
   onPause: function(){
     this.$play_icon.show();
     this.$pause_icon.hide();
+    if(this.position_interval_id){
+      clearInterval(this.position_interval_id);
+      this.position_interval_id = null;
+    }
   }
 
 });
