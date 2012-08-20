@@ -67,7 +67,6 @@ app.put('/users/:id', express.bodyParser(), function(req,res){
       delete user._id;
       var json = JSON.stringify(user);
       res.set('Content-Type','application/json');
-      res.set('Content-Length',json.length);
       res.send(json);
     });
   });
@@ -80,7 +79,6 @@ app.get('/users/:id', function(req,res){
     delete user._id;
     var json = JSON.stringify(user);
     res.set('Content-Type','application/json');
-    res.set('Content-Length',json.length);
     res.send(json);
   });
 });
@@ -110,7 +108,6 @@ app.get('/:user_id/playlists',function(req,res){
       if(err) return res.send(500,err.toString());
       var json = '['+response.join(',')+']'
       res.set('Content-Type','application/json');
-      res.set('Content-Length',json.length);
       res.send(json);
     });
 });
@@ -152,7 +149,6 @@ app.get('/:playlist_id/tracks',function(req,res){
       if(err) return res.send(500,err.toString());
       var json = '['+response.join(',')+']'
       res.set('Content-Type','application/json');
-      res.set('Content-Length',json.length);
       res.send(json);
     });
 });
