@@ -4,6 +4,12 @@
     <input type="text" name="track-url" class="input-xxlarge js-track-url-field" placeholder="Paste in any SoundCloud url (Track, User, etc)">
     <button id="new-track-btn" class="btn js-add-track"><i class="icon-plus"></i> Add Tracks</button>
   </form>
+  <div id="track-loader" style="display:none">
+    <div class="progress progress-striped active">
+      <div id="track-loading-bar" class="bar" style="width: 2%;"></div>
+    </div>
+  </div>
+  <div class="fail-msg"></div>  
 <% } else { %>
   <h2>Welcome to SoundLine</h2>
 <% } %>
@@ -24,7 +30,7 @@
         <td><%= track.get('title') %></td>
         <td class="hidden-phone"><a href="<%= track.get('user_url')%>" target="_blank"><%= track.get('username') %></a></td>
         <td><%=SL.timeFormat(track.get('duration')) %></td>
-        <td><i class="icon-minus-sign pull-right js-delete" data-id="<%= track.id %>" title="delete"></i></td>
+        <td><i class="icon-remove-sign pull-right js-delete" data-id="<%= track.id %>" title="delete"></i></td>
       </tr>
     <% }) %>
   </tbody>
