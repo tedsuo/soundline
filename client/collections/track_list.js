@@ -1,3 +1,9 @@
+/*
+  # TrackList
+  
+  Collection of tracks.  Accessed via the Playlist model.
+  
+*/
 SL.TrackList = Backbone.Collection.extend({
   model: SL.Track,
 
@@ -8,7 +14,8 @@ SL.TrackList = Backbone.Collection.extend({
   initialize: function(m,o){
     this.playlist = o.playlist;
   },
- 
+  
+  // add a track from a soundcloud track object
   createFromSoundcloud:function(item,options){
     if(!_.isObject(item) || item.kind !== 'track') return;
     this.create({

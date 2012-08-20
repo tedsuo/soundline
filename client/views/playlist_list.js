@@ -1,3 +1,12 @@
+/*
+  # PlaylistListView
+  
+  Yes it's actually called that.  Shows a list of playlists in the sidebar.
+  
+  ## Model Access
+  - Player
+    
+*/
 SL.PlaylistListView = Backbone.View.extend({
   
   events:{
@@ -10,6 +19,7 @@ SL.PlaylistListView = Backbone.View.extend({
   initialize: function(o){
     this.player = o.player;
     this.selected_playlist_cid = 0;
+    
     this.player.on('add',this.render,this);
     this.player.on('remove',this.render,this);
     this.player.on('change',this.render,this);
@@ -18,9 +28,13 @@ SL.PlaylistListView = Backbone.View.extend({
   },
 
   render: function(){
+    // hide the tooltip plugin so it doesn't break
     $('.js-playlist-btn',this.$el).tooltip('hide');
+    // render
     this.$el.html(SL.t.playlist_list(this.getData()));
+    // rebind the tooltip plugin
     $('.js-playlist-btn',this.$el).tooltip({placement:'right'});
+    
     return this;
   },
 

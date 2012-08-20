@@ -1,3 +1,12 @@
+/*
+  # TracklistView
+  
+  Display a list of tracks in a playlist, along with an add track form.
+  
+  ## Model Access
+  - Playlist
+  
+*/
 SL.TracklistView = Backbone.View.extend({
   events:{
     'submit .js-add-track-form': 'newTrack',
@@ -5,8 +14,13 @@ SL.TracklistView = Backbone.View.extend({
     'click .js-delete': 'deleteTrack'
   },
 
+  initialize: function(){
+    // note: playlist can only be set via setPlaylist
+    this.playlist = null;  
+  },
+  
   render: function(){
-    this.$el.html(SL.t.track_list(this.getData()));
+    this.$el.html( SL.t.track_list(this.getData()) );
   },
 
   getData: function(){
@@ -24,15 +38,18 @@ SL.TracklistView = Backbone.View.extend({
   },
 
   setPlaylist: function(p){
+    // unbind form current playlist
     if(this.playlist){
       this.playlist.off(null,null,this);
     }
     
+    // render blank if no playlist is selected
     if(_.isEmpty(p)){
-      this.playlist = undefined;
+      this.playlist = null;
       return this.render();
     }
 
+    // bind to new playlist
     this.playlist = p;
     this.playlist.on('add_tracks',this.render,this);
     this.playlist.on('change_track',this.render,this);
@@ -41,16 +58,17 @@ SL.TracklistView = Backbone.View.extend({
   },
 
   newTrack: function(){
-    var url = $('.js-track-url-field',this.$el).val()
+    // get the url
+    var url = $('.js-track-url-field',this.$el).val();
+    // add the tracks
     if(!_.isEmpty(url)) this.playlist.addTracksFromUrl(url);
+    
     return false;
   },
 
   changeTrack: function(e){
     var id = $(e.currentTarget).data('id');
     this.playlist.setActiveTrack(id);
-    this.playlist.getActiveTrack().play();
-    this.render();
     return false;
   },
 

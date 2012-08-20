@@ -1,3 +1,8 @@
+/*
+  # uid
+  
+  creates a non-cryptographically-secure unique id.
+*/
 SL.uid = function() {
   var mime ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var ua = [];

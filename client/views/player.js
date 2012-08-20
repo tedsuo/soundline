@@ -1,3 +1,12 @@
+/*
+  # Player
+  
+  Top level view.  Generates all necessary display code to run SoundLine.
+  
+  ## Model Access
+  - Player
+  
+*/
 SL.PlayerView = Backbone.View.extend({
   
   events: {
@@ -6,8 +15,8 @@ SL.PlayerView = Backbone.View.extend({
   
   initialize: function(o){
     this.player = this.model || o.player;
-    this.player.on('select_playlist',this.showTracks,this);
     
+    // create sub-views
     this.playlists_view = new SL.PlaylistListView({
       player: this.player
     });
@@ -18,9 +27,11 @@ SL.PlayerView = Backbone.View.extend({
       player: this.player
     });
     
+    this.player.on('select_playlist',this.showTracks,this);
   },
 
   render: function(){
+    // render EVERYTHING
     this.$el.html(SL.t.player());
     this.playlists_view
       .setElement(document.getElementById('sidebar'))
@@ -38,6 +49,7 @@ SL.PlayerView = Backbone.View.extend({
     SL.current_user.logout();
   },
   
+  // change track display
   showTracks: function(playlist){
     this.tracks_view.setPlaylist(playlist);
   }

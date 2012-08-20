@@ -1,3 +1,12 @@
+/*
+  # User
+  
+  User objects autheticate from SoundCloud, but can save additional data
+  in our own db
+  
+  ## Custom Events
+  - initialized
+*/
 SL.User = Backbone.Model.extend({
   urlRoot: '/users',
   
@@ -6,6 +15,7 @@ SL.User = Backbone.Model.extend({
     this.logged_in = SL.initializeAccessToken();
   },
 
+  // login via soundcloud
   authenticate: function(){
     var user = this;
     SC.connect(function() {
@@ -24,6 +34,7 @@ SL.User = Backbone.Model.extend({
     user.logged_in = false;
   },
 
+  // fetch user data from soundcloud
   initializeFromSoundClound: function(){
     var user = this;
     SC.get('/me', function(sc_user) {
@@ -31,10 +42,16 @@ SL.User = Backbone.Model.extend({
     });
   },
   
+  // update the server with relevant soundcloud userdata,
+  // fetch any additional soundline userdata
   initializeFromServer: function(sc_user){
     var user = this;
+    
+    // only save the fields we actually use
     var desired_fields = ['id','username','avatar_url','permalink_url'];
     var user_data = _.pick(sc_user,desired_fields);
+    
+    // rant: backbone's Save method signature is fucking obtuse
     user.save(user_data,{
       success: function(){
         user.trigger('initialized');
@@ -45,6 +62,8 @@ SL.User = Backbone.Model.extend({
 },
   // Static Methods
 {
+  // helper method for fetching a user from the db, bypassing initialization
+  // note: currently only used in tests
   findById: function(id,cb){
     var user = new SL.User({id:id});
     user.fetch({

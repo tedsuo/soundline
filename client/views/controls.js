@@ -1,3 +1,12 @@
+/*
+  # ControlsView
+  
+  Displays the player controls and current song information.
+  
+  ## Model Access
+  - Player
+  
+*/
 SL.ControlsView = Backbone.View.extend({
 
   events:{
@@ -9,6 +18,8 @@ SL.ControlsView = Backbone.View.extend({
   initialize: function(o){
     this.player = o.player;
     this.track = null;
+    this.position_interval_id = null;
+    
     this.player.on('change_track',this.changeTrack,this);
   },
 
@@ -32,12 +43,18 @@ SL.ControlsView = Backbone.View.extend({
     this.$track_position.html(SL.timeFormat(this.track.getPosition()));
   },
 
+  // reload the display and rebind to the new track
   changeTrack: function(){
+    // unbind
     if(this.track) this.track.off(null,null,this);
+
+    // bind to new track
     this.track = this.player.getActiveTrack();
-    this.onPlay();
     this.track.on('play',this.onPlay,this);
     this.track.on('pause',this.onPause,this);
+
+    // set to play mode
+    this.onPlay();
     this.renderTrackViewer();
   },
 
@@ -57,6 +74,9 @@ SL.ControlsView = Backbone.View.extend({
     var controls = this;
     this.$play_icon.hide();
     this.$pause_icon.show();
+    
+    // start refreshing the time display on the track
+    if(this.position_interval_id) return;
     this.position_interval_id = setInterval(function(){
       controls.renderTrackPosition();
     },250);
@@ -65,10 +85,11 @@ SL.ControlsView = Backbone.View.extend({
   onPause: function(){
     this.$play_icon.show();
     this.$pause_icon.hide();
-    if(this.position_interval_id){
-      clearInterval(this.position_interval_id);
-      this.position_interval_id = null;
-    }
+
+    // stop refreshing the time display on the track
+    if(!this.position_interval_id) return;
+    clearInterval(this.position_interval_id);
+    this.position_interval_id = null;
   }
 
 });

@@ -24,7 +24,7 @@ Besides all that, it works rather well. :)
 ## Server
 
 ### app.js
-Simple node.js/mongodb backend.  Serves up the client files, builds the templates, and has RESTful endpoints for the various client-side models.
+Simple node.js/mongodb backend.  Serves up the client files, builds the templates, and has RESTful endpoints for the various client-side models.  All id's are created on the client-side, no session storage or security.
 
 ## Client
 Front-end is written using backbone.js, twitter bootstrap, and the SoundCloud javascript SDK.  It follows a "standard" application layout, and namespaces all of it's components under the SL namespace to avoid cluttering up the global namespace.  The app is seperated into the following pieces:
@@ -52,7 +52,11 @@ Backbone collections.
 Backbone views.
 
 ### /templates
-Javascript template files.  Rendered with _.template, and compiled into javascript on the server with stitchit.
+Javascript template files.  Rendered with _.template, and compiled into javascript on the server with stitchit.  Templates are accessed like thus:
+
+```javascript
+SL.t.template_file_name( params );
+```
 
 ### /helpers
 Helper functions used throughout the app.  Each file returns a single function.

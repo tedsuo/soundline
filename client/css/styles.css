@@ -1,3 +1,6 @@
+
+/* Generic Styles */
+
 body {
 background: url("/img/noise.png") #333333;
 }
@@ -7,6 +10,10 @@ clear:both;
 .clickable{
 cursor:pointer;
 }
+
+
+/* Splash Page */
+
 #splash{
 margin-top:5%;
 }
@@ -48,6 +55,9 @@ a.big-action-button:active { -webkit-box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.5)
 a.big-action-button { cursor: pointer; }
 a.big-action-button.orange { border: 1px solid #c53421; }
 a.big-action-button.orange:hover { border-color: #832316; }
+
+
+/* Player Bar */
 
 #player-container{
 margin-top:86px;
@@ -136,6 +146,9 @@ line-height:40px;
 display:none;
 }
 
+
+/* Track List */
+
 #track-list tbody {
   cursor:pointer;
 }
@@ -152,6 +165,9 @@ background-color:#ff6600;
 .active-track, .active-track a{
 color:#ffffff;
 }
+
+
+/* Mobile Tweaks */
 
 @media (max-width: 979px) {
   #player-container{
@@ -174,5 +190,3 @@ color:#ffffff;
     margin: 15px 5px;
   }
 }
-
-

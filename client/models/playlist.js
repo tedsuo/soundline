@@ -1,4 +1,15 @@
-// custom events: add_tracks
+/* 
+  # Playlist
+   
+  The main model.  Each playlist has a list of tracks, an active_track, and methods for adding tracks from soundcloud
+  
+  ## Custom Events
+  - add_tracks
+  - change_track
+  - remove_track
+  
+*/
+
 SL.Playlist = Backbone.Model.extend({
 
   urlRoot: function(){
@@ -6,19 +17,27 @@ SL.Playlist = Backbone.Model.extend({
   },
 
   initialize: function(){
+    // id's are created client-side
     if(!this.has('id')) this.set({ 'id': SL.uid() });
+    
+    // fetch tracks immediately    
     this.tracks = new SL.TrackList([],{ playlist: this });
     this.tracks.on('reset',this.addTracks,this);
     this.tracks.fetch();
+    
     this.active_track = null;
   },
-   
+  
+  // deletes a track from the track collection
   removeTrack: function(id){
     var track = this.tracks.get(id);
     if(!track) return;
+    
+    // stop playing the track if we are currently listening to it
     if(track.isActive()){
       this.setActiveTrack(this.getNextTrack())
     }
+    
     track.destroy();
     this.trigger('remove_track');
   },
@@ -27,10 +46,12 @@ SL.Playlist = Backbone.Model.extend({
     return this.tracks;
   },
 
+  // triggered when we move on to another playlist
   deactivate: function(){
     if(this.active_track) this.active_track.deactivate();
   },
 
+  // get the track that is currently playing
   getActiveTrack: function(){
     if(_.isEmpty(this.active_track)){
       var track = this.getNextTrack();
@@ -40,17 +61,23 @@ SL.Playlist = Backbone.Model.extend({
     return this.active_track;
   },
 
+  // set the track that is currently playing
   setActiveTrack: function(track){
     if(_.isString(track)) track = this.tracks.get(track);
-    if(this.active_track){
-      this.active_track.deactivate();
-    }
+    
+    // if we are currently playing a track, deactivate it
+    if(this.active_track) this.active_track.deactivate();
+    
     this.active_track = track;
     this.active_track.activate();
+    
+    // update the server
     SL.current_user.save({active_track_id:this.active_track.id});
+    
     this.trigger('change_track',track,this);
   },
 
+  // returns the next track in the playlist
   getNextTrack: function(){
     var tracks = this.tracks;
     if(this.length === 0) return null;
@@ -60,6 +87,7 @@ SL.Playlist = Backbone.Model.extend({
     return tracks.at(0);
   },
 
+  // returns the previous track in the playlist
   getPrevTrack: function(){
     var tracks = this.tracks;
     if(this.length === 0) return null;
@@ -69,6 +97,8 @@ SL.Playlist = Backbone.Model.extend({
     return tracks.at(prev_index);
   },
 
+  // add tracks from soundcloud
+  // note: this is used internally, addTracksFromUrl is the suggested method
   addTracks: function(items){
     var tracks = this.tracks;
     _.forEach(items,function(item){
@@ -77,6 +107,8 @@ SL.Playlist = Backbone.Model.extend({
     this.trigger('add_tracks');
   },
 
+  // resolve a soundcloud url into a set of tracks
+  // note: currently this only fetches up to 50 tracks
   addTracksFromUrl: function(url){
     var playlist = this;
     
@@ -89,7 +121,7 @@ SL.Playlist = Backbone.Model.extend({
     });
   },
 
-  // inspect a result from soundcloud convert it into a set of tracks
+  // inspect a result from soundcloud, convert it into a set of tracks
   addTracksFromSoundcloudObject: function(result){
     if(!_.isObject(result)) return;
     
@@ -109,6 +141,7 @@ SL.Playlist = Backbone.Model.extend({
     if(result.kind === 'group') return this.addTracksFromSoundcloudGroup(result);
   },
 
+  // fetch all of a user's tracks from soundcloud
   addTracksFromSoundcloudUser: function(user){
     var playlist = this;
     var tracks = this.tracks;
@@ -116,7 +149,8 @@ SL.Playlist = Backbone.Model.extend({
       playlist.addTracks(results);
     });
   },
-
+  
+  // fetch all of a user's favorited tracks from soundcloud
   addFavoritesFromSoundcloudUser: function(user){
     var playlist = this;
     var tracks = this.tracks;
@@ -125,6 +159,7 @@ SL.Playlist = Backbone.Model.extend({
     });
   },
 
+  // fetch all of a groups's tracks from soundcloud
   addTracksFromSoundcloudGroup: function(group){
     var playlist = this;
     var tracks = this.tracks;

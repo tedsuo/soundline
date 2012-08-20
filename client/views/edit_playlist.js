@@ -1,3 +1,12 @@
+/*
+  # EditPlaylistView
+  
+  shows an edit form popup.
+  
+  ## Model Access
+  - Playlist
+  
+*/
 SL.EditPlaylistView = Backbone.View.extend({ 
   events: {
     'click .js-remove': 'remove',

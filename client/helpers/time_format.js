@@ -1,3 +1,8 @@
+/*
+  # timeFormat
+  
+  takes milliseconds, returns a formatted string, a la MINUTES:SECONDS
+*/
 SL.timeFormat = function(time){
   time = Math.round(time / 1000);
   var minutes = Math.floor(time/60);

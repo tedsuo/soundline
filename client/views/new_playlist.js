@@ -1,3 +1,12 @@
+/*
+  # NewPlaylistView
+  
+  shows a new playlist form popup.
+  
+  ## Model Access
+  - Player
+  
+*/
 SL.NewPlaylistView = Backbone.View.extend({ 
   events: {
     'click .js-remove': 'remove',

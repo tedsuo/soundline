@@ -1,3 +1,12 @@
+/*
+  # SplashView
+  
+  Basically, the login screen.
+  
+  ## Model Access
+  - SL.curent_user
+  
+*/
 SL.SplashView = Backbone.View.extend({
   
   events: {
