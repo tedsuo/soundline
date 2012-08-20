@@ -12,7 +12,7 @@ SL.PlaylistListView = Backbone.View.extend({
   events:{
     'click #new-playlist-btn': 'newPlaylist',
     'click .js-playlist-btn': 'selectPlaylist',
-    'dblclick .js-playlist-btn': 'editPlaylist',
+    'click .js-edit': 'editPlaylist',
     'click .js-delete': 'deletePlaylist'
   },
   
@@ -57,7 +57,7 @@ SL.PlaylistListView = Backbone.View.extend({
   editPlaylist: function(e){
     var id = $(e.currentTarget).data('id');
     var form = new SL.EditPlaylistView({
-      playlist: this.player.get(cid)
+      playlist: this.player.get(id)
     });
     $('body').append(form.el);
     form.render();

@@ -4,17 +4,15 @@
     <% playlists.forEach(function(list){ %>
       <li class="<% if(list.id === selected_playlist_id){ %> active<% } %>">
         <a href="#" class="js-playlist-btn" data-id="<%= list.id %>" rel="tooltip" title="<%= list.get('description') %>">
+          <i class="icon-info-sign pull-left js-edit" data-id="<%= list.id %>" title="edit"></i>
           <label class="pull-left clickable"><%= list.get('name') %></label>
-          <i class="icon-minus-sign pull-right js-delete" data-id="<%= list.id %>" title="delete"></i>
+          <i class="icon-remove pull-right js-delete" data-id="<%= list.id %>" title="delete"></i>
           <div class="clear"></div>
         </a>
       </li>
     <% }) %>
     <li>
       <button id="new-playlist-btn" class="btn"><i class="icon-plus"></i>Add Playlist</button>
-    </li>
-    <li>
-      *double tap to edit
     </li>
   </ul>
 </div>

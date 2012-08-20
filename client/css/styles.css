@@ -11,7 +11,6 @@ clear:both;
 cursor:pointer;
 }
 
-
 /* Splash Page */
 
 #splash{
@@ -166,6 +165,12 @@ background-color:#ff6600;
 color:#ffffff;
 }
 
+
+/* Playlist List */
+
+.js-playlist-btn i{
+margin-top: 3px;
+}
 
 /* Mobile Tweaks */
 
