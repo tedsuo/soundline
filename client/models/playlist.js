@@ -5,6 +5,7 @@
   
   ## Custom Events
   - add_tracks
+  - add_tracks_failed
   - change_track
   - remove_track
   
@@ -115,7 +116,7 @@ SL.Playlist = Backbone.Model.extend({
     // SC can't resolve /you endpoints, but we know what to do
     if(url.match('/you/tracks')) return this.addTracksFromSoundcloudUser(SL.current_user);
     if(url.match('/you/favorites')) return this.addFavoritesFromSoundcloudUser(SL.current_user);
-
+    
     SC.get('/resolve',{url:url},function(results){
       playlist.addTracksFromSoundcloudObject(results);
     });
@@ -123,7 +124,11 @@ SL.Playlist = Backbone.Model.extend({
 
   // inspect a result from soundcloud, convert it into a set of tracks
   addTracksFromSoundcloudObject: function(result){
-    if(!_.isObject(result)) return;
+    // emit fail if we're adding nothing
+    if(!_.isObject(result)) return this.trigger('add_tracks_failed');;
+
+    // emit fail if we got an error    
+    if(result.errors) return this.trigger('add_tracks_failed');
     
     // whatever it is, if it has tracks, we want them
     if(_.isArray(result.tracks)) return this.addTracks(result.tracks);
